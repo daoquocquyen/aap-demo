@@ -1,12 +1,13 @@
-- name: Hello via webhook
-  hosts: localhost
+- name: Hello when payload present
+  hosts: all
   sources:
     - ansible.eda.webhook:
         host: 0.0.0.0
-        port: 5000           # listener inside the activation
+        port: 5000
   rules:
-    - name: say hello on any event
-      condition: event is defined
+    - name: say hello if payload
+      condition: event.payload is defined
       action:
         debug:
           msg: "hello"
+
