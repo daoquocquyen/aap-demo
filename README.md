@@ -1,7 +1,7 @@
 Log in to https://sandbox.redhat.com/
 
 start openshift sandbox then AAP sandbox
-Note: Eventually AAP will run on a assigned template on openshift sandbox
+Note: Eventually AAP will run on a assigned namespace (<username>-dev) on openshift sandbox
 
 on AAP UI:
 Automation Decision (Event Driven rulebooks):
@@ -26,11 +26,12 @@ Automation Controller (Playbooks):
         Source control type: Git
         Source Control URL: https://github.com/daoquocquyen/aap-demo.git
         Source Control Branch/Tag/Commit: main
-    Templates -> Create Template -> name: secret-restart
+    Templates -> Create Template -> name: restart-deployments-on-secret-modified
         Job Type: Run
         Inventory: EDA-Local
         Project: aap-demo
-        Playbook: playbooks/secret-restart.yaml
+        Playbook: playbooks/restart-deployments-on-secret-modified.yml
         Execution Environment: aap-25-de
         Credential: EDA-Local
-        Save
+        Extra Variables:
+          namespace: dqquyen2003asus-dev
