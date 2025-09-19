@@ -20,6 +20,7 @@ Automation Controller (Playbooks):
         Inventory Type: Smart
         Save
         Hosts -> Add Host -> name: localhost
+        Variables: ansible_connection: local
     Projects -> Create Project -> name: aap-demo
         Organization: Default
         Execution Environment: default
