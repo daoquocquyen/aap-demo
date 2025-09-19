@@ -1,0 +1,51 @@
+# Demo Secret + Deployment that mounts the secret and continuously prints it.
+# Apply this into the same namespace your rulebook/playbook uses.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: demo-secret
+type: Opaque
+stringData:
+  mykey: "initial-secret-value"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secret-demo
+  labels:
+    app: secret-demo
+    # This label matches the playbook's default restart_label: restart-on=secret/my-secret
+    restart-on: "demo-secret"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: secret-demo
+  template:
+    metadata:
+      labels:
+        app: secret-demo
+    spec:
+      containers:
+        - name: secret-reader
+          image: busybox:1.35
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - -c
+            - |
+              while true; do
+                echo "---- SECRET CONTENT ----"
+                cat /etc/secret/mykey 2>/dev/null || echo "<missing>"
+                echo "------------------------"
+                sleep 5
+              done
+          volumeMounts:
+            - name: secret-vol
+              mountPath: /etc/secret
+              readOnly: true
+      volumes:
+        - name: secret-vol
+          secret:
+            secretName: demo-secret
