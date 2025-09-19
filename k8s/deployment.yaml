@@ -12,19 +12,19 @@ stringData:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: secret-demo
+  name: restart-on-secret-change-demo
   labels:
-    app: secret-demo
+    app: restart-on-secret-change-demo
     restart-on: demo-secret
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: secret-demo
+      app: restart-on-secret-change-demo
   template:
     metadata:
       labels:
-        app: secret-demo
+        app: restart-on-secret-change-demo
         restart-on: demo-secret
     spec:
       containers:
