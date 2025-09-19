@@ -10,7 +10,8 @@ Automation Decision (Event Driven rulebooks):
     Source control type: Git
     Source Control URL: https://github.com/daoquocquyen/aap-demo.git
     Source Control Branch/Tag/Commit: main
-  Decision Environments (image to run rulebook) -> Create Decision Environment -> name: aap-25-de
+  Decision Environments (image to run rulebook) -> Create Decision Environment
+    name: aap-25-de
     Organization: Default
     Execution Environment: registry.redhat.io/ansible-automation-platform-25/de-supported-rhel8:latest
 
@@ -20,13 +21,19 @@ Automation Controller (Playbooks):
         Inventory Type: Smart
         Save
         Hosts -> Add Host -> name: localhost
-        Variables: ansible_connection: local
+        Variables:
+            ansible_connection: local
+            ansible_python_interpreter: /usr/bin/python3.11
     Projects -> Create Project -> name: aap-demo
         Organization: Default
         Execution Environment: default
         Source control type: Git
         Source Control URL: https://github.com/daoquocquyen/aap-demo.git
         Source Control Branch/Tag/Commit: main
+    Execution Environments (image to run ansible) -> Create Execution Environment
+        name: aws-xx
+        organization: Default
+        Execution Environment: quay.io/ansible/awx-ee:latest
     Templates -> Create Template -> name: restart-deployments-on-secret-modified
         Job Type: Run
         Inventory: EDA-Local

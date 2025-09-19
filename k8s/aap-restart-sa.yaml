@@ -1,0 +1,35 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: aap-restart-deploy-role
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: aap-restart-deploy-binding-controller
+subjects:
+  - kind: ServiceAccount
+    name: sandbox-aap-controller
+roleRef:
+  kind: Role
+  name: aap-restart-deploy-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: aap-restart-deploy-binding-eda
+subjects:
+  - kind: ServiceAccount
+    name: sandbox-aap-eda
+roleRef:
+  kind: Role
+  name: aap-restart-deploy-role
+  apiGroup: rbac.authorization.k8s.io

@@ -15,7 +15,6 @@ metadata:
   name: secret-demo
   labels:
     app: secret-demo
-    # This label matches the playbook's default restart_label: restart-on=secret/my-secret
     restart-on: demo-secret
 spec:
   replicas: 1
@@ -26,6 +25,7 @@ spec:
     metadata:
       labels:
         app: secret-demo
+        restart-on: demo-secret
     spec:
       containers:
         - name: secret-reader
