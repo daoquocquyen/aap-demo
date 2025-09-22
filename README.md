@@ -8,7 +8,7 @@ On openshift UI:
 On terminal:
     Paste the command and login
     oc project <username-dev>   # switch to your project
-    oc apply -f k8s/deployment.yaml -n    # create a deployment to be restarted
+    oc apply -f k8s/deployment.yaml     # create a deployment to be restarted
     oc apply -f k8s/aap-restart-sa.yaml   # create service account
     oc create token restart-deploy-secret --duration=24h   # create a token for AAP to access k8s API
 
